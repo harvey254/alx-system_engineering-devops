@@ -1,2 +1,2 @@
 #!/bin/bash
-sed -i "$ a $(tail -n1 iacta)" iacta
+cat iacta | tail -qn
