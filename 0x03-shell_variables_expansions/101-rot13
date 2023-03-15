@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "bccgcgc chcch " | tr "a-zA-Z" "n-zN-Za-mA-M"
+echo "cgcgc chcch " | tr "a-zA-Z" "n-zN-Za-mA-M"
