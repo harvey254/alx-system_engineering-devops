@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "cgcgc chcch " | tr "a-zA-Z" "n-zN-Za-mA-M"
+tr "a-zA-Z" "n-zN-Za-mA-M"
