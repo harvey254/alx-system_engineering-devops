@@ -1,3 +1,5 @@
+#installs puppet-lint
+
 package { 'pip3':
   ensure => 'present',
   provider => 'pip3',
@@ -9,8 +11,3 @@ package { 'flask':
   require  => Package['pip3'],
 }
 
-package { 'werkzeug':
-  ensure   => '2.0.3',
-  provider => 'pip3',
-  require  => Package['pip3'],
-}
