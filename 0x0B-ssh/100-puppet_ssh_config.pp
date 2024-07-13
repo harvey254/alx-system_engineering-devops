@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # sets up a client SSH configuration file so that we can connect to a server without using a password
-file { '/etc/ssh/ssh_config':
+file { '/etc/ssh/shh_config':
   ensure => 'present',
 }
 file_line { 'Turn off passwd auth':
