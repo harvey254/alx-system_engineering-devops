@@ -1,139 +1,153 @@
 
 
 Curriculum
-SE Foundations Average: 78.16%
-0x0D. Web stack debugging #0
+SE Foundations Average: 77.67%
+0x0E. Web stack debugging #1
 DevOpsSysAdminScriptingDebugging
 
     Weight: 1
-    Project over - took place from Jul 1, 2024 6:00 AM to Jul 3, 2024 6:00 AM
+    Project over - took place from Jul 8, 2024 6:00 AM to Jul 12, 2024 6:00 AM
     An auto review will be launched at the deadline
 
 In a nutshell…
 
-    Auto QA review: 0.0/3 mandatory
+    Auto QA review: 0.0/3 mandatory & 0.0/3 optional
     Altogether:  0.0%
         Mandatory: 0.0%
-        Optional: no optional tasks
+        Optional: 0.0%
+        Calculation:  0.0% + (0.0% * 0.0%)  == 0.0%
 
 Concepts
 
 For this project, we expect you to look at these concepts:
 
     Network basics
-    Docker
     Web stack debugging
-
-Background Context
-
-The Webstack debugging series will train you in the art of debugging. Computers and software rarely work the way we want (that’s the “fun” part of the job!).
-
-Being able to debug a webstack is essential for a Full-Stack Software Engineer, and it takes practice to be a master of it.
-
-In this debugging series, broken/bugged webstacks will be given to you, the final goal is to come up with a Bash script that once executed, will bring the webstack to a working state. But before writing this Bash script, you should figure out what is going on and fix it manually.
-
-Let’s start with a very simple example. My server must:
-
-    have a copy of the /etc/passwd file in /tmp
-    have a file named /tmp/isworking containing the string OK
-
-Let’s pretend that without these 2 elements, my web application cannot work.
-
-Let’s go through this example and fix the server.
-
-vagrant@vagrant:~$ docker run -d -ti ubuntu:14.04
-Unable to find image 'ubuntu:14.04' locally
-14.04: Pulling from library/ubuntu
-34667c7e4631: Already exists
-d18d76a881a4: Already exists
-119c7358fbfc: Already exists
-2aaf13f3eff0: Already exists
-Digest: sha256:58d0da8bc2f434983c6ca4713b08be00ff5586eb5cdff47bcde4b2e88fd40f88
-Status: Downloaded newer image for ubuntu:14.04
-76f44c0da25e1fdf6bcd4fbc49f4d7b658aba89684080ea5d6e8a0d832be9ff9
-vagrant@vagrant:~$ docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-76f44c0da25e        ubuntu:14.04        "/bin/bash"         13 seconds ago      Up 12 seconds                           infallible_bhabha
-vagrant@vagrant:~$ docker exec -ti 76f44c0da25e /bin/bash
-root@76f44c0da25e:/# ls /tmp/
-root@76f44c0da25e:/# cp /etc/passwd /tmp/
-root@76f44c0da25e:/# echo OK > /tmp/isworking
-root@76f44c0da25e:/# ls /tmp/
-isworking  passwd
-root@76f44c0da25e:/#
-vagrant@vagrant:~$
-
-Then my answer file would contain:
-
-sylvain@ubuntu:~$ cat answerfile
-#!/usr/bin/env bash
-# Fix my server with these magic 2 lines
-cp /etc/passwd /tmp/
-echo OK > /tmp/isworking
-sylvain@ubuntu:~$
-
-Note that as you cannot use interactive software such as emacs or vi in your Bash script, everything needs to be done from the command line (including file edition).
-Installing Docker
-
-For this project you will be given a container which you can use to solve the task. If you would like to have Docker so that you can experiment with it and/or solve this problem locally, you can install it on your machine, your Ubuntu 14.04 VM, or your Ubuntu 16.04 VM if you upgraded.
-
-    Mac OS
-    Windows
-    Ubuntu 14.04 (Note that Docker for Ubuntu 14 is deprecated and you will have to make some adjustments to the instructions when installing)
-    Ubuntu 16.04
-
-Resources
-
-man or help:
-
-    curl
 
 Requirements
 General
 
     Allowed editors: vi, vim, emacs
-    All your files will be interpreted on Ubuntu 14.04 LTS
+    All your files will be interpreted on Ubuntu 20.04 LTS
     All your files should end with a new line
-    A README.md file, at the root of the folder of the project, is mandatory
+    A README.md file at the root of the folder of the project is mandatory
     All your Bash script files must be executable
     Your Bash scripts must pass Shellcheck without any error
     Your Bash scripts must run without error
     The first line of all your Bash scripts should be exactly #!/usr/bin/env bash
     The second line of all your Bash scripts should be a comment explaining what is the script doing
+    You are not allowed to use wget
 
 Tasks
-0. Give me a page!
+0. Nginx likes port 80
 mandatory
 Score: 0.0% (Checks completed: 0.0%)
 
-Be sure to read the Docker concept page
+Using your debugging skills, find out what’s keeping your Ubuntu container’s Nginx installation from listening on port 80. Feel free to install whatever tool you need, start and destroy as many containers as you need to debug the issue. Then, write a Bash script with the minimum number of commands to automate your fix.
 
-In this first debugging project, you will need to get Apache to run on the container and to return a page containing Hello Holberton when querying the root of it.
+Requirements:
 
-Example:
+    Nginx must be running, and listening on port 80 of all the server’s active IPv4 IPs
+    Write a Bash script that configures a server to the above requirements
 
-vagrant@vagrant:~$ docker run -p 8080:80 -d -it holbertonschool/265-0
-47ca3994a4910bbc29d1d8925b1c70e1bdd799f5442040365a7cb9a0db218021
-vagrant@vagrant:~$ docker ps
-CONTAINER ID        IMAGE                   COMMAND             CREATED             STATUS              PORTS                  NAMES
-47ca3994a491        holbertonschool/265-0   "/bin/bash"         3 seconds ago       Up 2 seconds        0.0.0.0:8080->80/tcp   vigilant_tesla
-vagrant@vagrant:~$ curl 0:8080
-curl: (52) Empty reply from server
-vagrant@vagrant:~$
+root@966c5664b21f:/# curl 0:80
+curl: (7) Failed to connect to 0 port 80: Connection refused
+root@966c5664b21f:/#
+root@966c5664b21f:/# ./0-nginx_likes_port_80 > /dev/null 2&>1
+root@966c5664b21f:/#
+root@966c5664b21f:/# curl 0:80
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
 
-Here we can see that after starting my Docker container, I curl the port 8080 mapped to the Docker container port 80, it does not return a page but an error message. Note that you might also get the error message curl: (52) Empty reply from server.
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
 
-vagrant@vagrant:~$ curl 0:8080
-Hello Holberton
-vagrant@vagrant:~$
-
-After connecting to the container and fixing whatever needed to be fixed (here is your mission), you can see that curling port 80 return a page that contains Hello Holberton. Paste the command(s) you used to fix the issue in your answer file.
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@966c5664b21f:/#
 
 Repo:
 
     GitHub repository: alx-system_engineering-devops
-    Directory: 0x0D-web_stack_debugging_0
-    File: 0-give_me_a_page
+    Directory: 0x0E-web_stack_debugging_1
+    File: 0-nginx_likes_port_80
+
+1. Make it sweet and short
+#advanced
+Score: 0.0% (Checks completed: 0.0%)
+
+Using what you did for task #0, make your fix short and sweet.
+
+Requirements:
+
+    Your Bash script must be 5 lines long or less
+    There must be a new line at the end of the file
+    You must respect usual Bash script requirements
+    You cannot use ;
+    You cannot use &&
+    You cannot use wget
+    You cannot execute your previous answer file (Do not include the name of the previous script in this one)
+    service (init) must say that nginx is not running ← for real
+
+root@966c5664b21f:/# curl 0:80
+curl: (7) Failed to connect to 0 port 80: Connection refused
+root@966c5664b21f:/#
+root@966c5664b21f:/# cat -e 1-debugging_made_short | wc -l
+5
+root@966c5664b21f:/# ./1-debugging_made_short
+root@966c5664b21f:/# curl 0:80
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@966c5664b21f:/#
+root@966c5664b21f:/# service nginx status
+ * nginx is not running
+root@966c5664b21f:/# 
+
+Repo:
+
+    GitHub repository: alx-system_engineering-devops
+    Directory: 0x0E-web_stack_debugging_1
+    File: 1-debugging_made_short
 
 Copyright © 2024 ALX, All rights reserved.
 
